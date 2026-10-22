@@ -6,7 +6,7 @@ let currentUser,reports=[],teams=[],notices=[],selectedId,filter='all',loading=f
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 async function api(path,options={}){const response=await fetch(path,{credentials:'same-origin',...options,headers:{Accept:'application/json',...options.headers}});if(!response.ok){let message='Could not complete this action.';try{const body=await response.json();message=typeof body.detail==='string'?body.detail:'Check the fields and try again.';}catch{}if(response.status===401)showLogin(true);const failure=new Error(message);failure.status=response.status;failure.localBackup=response.headers.get('X-BioGuard-Local-Backup')==='available';throw failure;}return response.status===204?null:response.json();}
 const post=(path,body,options={})=>api(path,{...options,method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-function showLogin(ended=false){inspectionRequests.clear();currentUser=undefined;reports=[];teams=[];notices=[];selectedId=undefined;$('#workspace').hidden=true;$('#account').hidden=true;$('#inbox').replaceChildren();$('#detail').replaceChildren();$('#manage-panel').replaceChildren();$('#entry-panel').hidden=false;$('#entry-message').textContent='Opening sign in...';$('#entry-retry').hidden=true;if(window.ReactNativeWebView){if(ended)window.ReactNativeWebView.postMessage('bioguard:session-ended');}else window.location.replace('/');}
+function showLogin(ended=false){inspectionRequests.clear();currentUser=undefined;reports=[];teams=[];notices=[];selectedId=undefined;$('#workspace').hidden=true;$('#account').hidden=true;$('#inbox').replaceChildren();$('#detail').replaceChildren();$('#manage-panel').replaceChildren();$('#entry-panel').hidden=false;$('#entry-message').textContent='Opening sign in...';$('#entry-retry').hidden=true;if(window.ReactNativeWebView){if(ended)window.ReactNativeWebView.postMessage('bioguard:session-ended');}else window.location.replace('/BioGuard-Demo-App/');}
 function badge(status){return node('span',statusNames[status]||status.replaceAll('_',' '),'badge '+(['submitted','needs_info','blocked','awaiting_verification'].includes(status)?'warning':''));}
 function feedback(message,failed=false){const e=$('#feedback');e.textContent=message;e.className=message?(failed?'error':'success'):'';}
 function field(form,label,name,kind='input',value=''){const wrap=node('label',label);const input=node(kind);input.name=name;input.id=name+'_'+(++fieldId);wrap.htmlFor=input.id;input.value=value??'';wrap.append(input);form.append(wrap);return input;}
@@ -29,7 +29,7 @@ function drawLocation(container,report){
    section.append(node('p','This map location cannot be displayed.','compact-note'));container.append(section);return;
   }
   const map=node('iframe',undefined,'report-location-live');map.title='Reported plant location near Elmina Lakeside Mall';
-  map.src='/maps/elmina?mode=view&latitude='+encodeURIComponent(report.latitude)+'&longitude='+encodeURIComponent(report.longitude);
+  map.src='/BioGuard-Demo-App/maps/elmina/?mode=view&latitude='+encodeURIComponent(report.latitude)+'&longitude='+encodeURIComponent(report.longitude);
   map.referrerPolicy='strict-origin-when-cross-origin';section.append(map,node('p','Scroll or pinch to zoom. Drag to move. Red pin: reported plant location.','compact-note'));container.append(section);return;
  }
 
@@ -38,8 +38,8 @@ function drawLocation(container,report){
  if(!valid){section.append(node('p',pin?'This map location cannot be displayed.':'No map pin was saved with this report.','compact-note'));container.append(section);return;}
  const layout=node('div',undefined,'report-location-layout'),figure=node('figure',undefined,'report-location-figure');
  const frame=node('div',undefined,'report-location-map'),image=node('img',undefined,'report-location-image');
- image.src='/officer-assets/elmina-city-centre-demo.png';image.alt='Elmina City Centre demo map';image.width=642;image.height=453;image.draggable=false;
- const marker=node('img',undefined,'report-location-pin');marker.src='/officer-assets/location-pin.svg';marker.alt='Plant location selected by the reporter';marker.style.left=(pin.x*100)+'%';marker.style.top=(pin.y*100)+'%';
+ image.src='/BioGuard-Demo-App/officer-assets/elmina-city-centre-demo.png';image.alt='Elmina City Centre demo map';image.width=642;image.height=453;image.draggable=false;
+ const marker=node('img',undefined,'report-location-pin');marker.src='/BioGuard-Demo-App/officer-assets/location-pin.svg';marker.alt='Plant location selected by the reporter';marker.style.left=(pin.x*100)+'%';marker.style.top=(pin.y*100)+'%';
  image.addEventListener('error',()=>{frame.hidden=true;figure.append(node('p','The location map could not load. Refresh to try again.','compact-note'));});
  frame.append(image,marker);enableLocationGestures(frame,image,marker,pin);figure.append(frame,node('figcaption','Scroll or pinch to zoom. Drag to move. Older demo image. Red pin: reported plant location.','compact-note'));
  layout.append(figure);section.append(layout);container.append(section);

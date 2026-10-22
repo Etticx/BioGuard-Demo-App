@@ -36,5 +36,11 @@
     "highlighted_actions_to_pdf": 49,
     "browser_errors": 0,
     "phone_highlight_pointer_scroll_hide_resume": "passed"
+  },
+  "github_pages": {
+    "base_path": "/BioGuard-Demo-App",
+    "full_workflow": "passed through completed case and PDF",
+    "browser_errors": 0,
+    "nojekyll": true
   }
 }

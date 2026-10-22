@@ -1,14 +1,29 @@
+# BioGuard GitHub Pages demo
+
+This frontend-only build is configured for:
+https://etticx.github.io/BioGuard-Demo-App/
+
+## Publish
+Commit and push all files, including `.nojekyll`, `_expo` and the route folders.
+In GitHub Settings > Pages choose Deploy from a branch, main, / (root).
+Wait for the Pages deployment to finish, then refresh the website.
+No build command, backend, API key, or laptop server is required.
+
+The `/BioGuard-Demo-App` path is built into this version. Renaming the repository requires rebuilding the Expo frontend with its new base path.
+
+## Demo
+Use the guide and highlighted controls. Data stays in each visitor's browser.
+AI output and classification are simulated; Reset demo clears demo progress.
+Map tiles need internet. The original production application is unchanged.
+
 # BioGuard - frontend-only judges' demo
 
 This folder is a ready-built static website. It reuses BioGuard's exported Grounds/Ecology screens and original Management frontend. There is no backend server, database service, Groq, Ollama, model inference or API key required.
 
 ## Host and share
 
-Publish the CONTENTS of this folder at the root of a static website. Select demoapp as the publish/output directory if importing the parent repository. Leave the build command empty: these files are already built.
+This copy is configured specifically for GitHub Pages at `/BioGuard-Demo-App/`. Publish from the `main` branch and repository root as described above. Keep `.nojekyll` so GitHub serves `_expo`. For another repository name or a root-domain host, rebuild with that host's base path.
 
-Static hosts such as Netlify Drop, Cloudflare Pages or Vercel can serve it. Routing files for Netlify/Cloudflare Pages and Vercel are included. Use HTTPS. You do not need to start BioGuard, Python, Expo or a tunnel for judges.
-
-Upload all files and folders, especially _expo, assets, officer-assets and samples. Open the resulting homepage and check it before sharing the URL. Project-subfolder hosting (for example github.io/repository-name/) is not supported by this exported build; use a root-domain static deployment.
 
 To test locally without deploying: from this folder run `python -m http.server 8127`, then open http://localhost:8127/. This is only a static file server, not the BioGuard backend. Double-clicking index.html (file://) is not supported.
 

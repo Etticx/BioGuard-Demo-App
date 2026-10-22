@@ -18,7 +18,7 @@
  }
  // Feed a local sample file through the original Expo image picker, using its normal change event.
  const originalClick=HTMLInputElement.prototype.click;
- HTMLInputElement.prototype.click=function(){if(this.type!=='file'||!window.__demoSamplePhoto)return originalClick.call(this);window.__demoSamplePhoto=false;const input=this;demo.realFetch('/samples/mimosa.jpg').then(r=>r.blob()).then(blob=>{const transfer=new DataTransfer();transfer.items.add(new File([blob],'demo-mimosa.jpg',{type:'image/jpeg'}));input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));}).catch(()=>originalClick.call(input));};
+ HTMLInputElement.prototype.click=function(){if(this.type!=='file'||!window.__demoSamplePhoto)return originalClick.call(this);window.__demoSamplePhoto=false;const input=this;demo.realFetch('/BioGuard-Demo-App/samples/mimosa.jpg').then(r=>r.blob()).then(blob=>{const transfer=new DataTransfer();transfer.items.add(new File([blob],'demo-mimosa.jpg',{type:'image/jpeg'}));input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));}).catch(()=>originalClick.call(input));};
  const originalDispatch=HTMLInputElement.prototype.dispatchEvent;
  HTMLInputElement.prototype.dispatchEvent=function(event){if(this.type==='file'&&event.type==='click'&&window.__demoSamplePhoto){this.click();return true;}return originalDispatch.call(this,event);};
  let sampleStep=0;

@@ -9,7 +9,7 @@
  }
  function fail(){status.hidden=false;status.textContent='Map unavailable. Check your connection and retry.';notify('bioguard:map-error');}
  try{
-  const response=await fetch('/officer-assets/elmina-map-config.json');if(!response.ok)throw new Error('config');config=await response.json();
+  const response=await fetch('/BioGuard-Demo-App/officer-assets/elmina-map-config.json');if(!response.ok)throw new Error('config');config=await response.json();
   if(!window.L)throw new Error('library');
   const allowed=L.latLngBounds(config.bounds),picker=params.get('mode')!=='view';
   const valid=(latitude,longitude)=>Number.isFinite(latitude)&&Number.isFinite(longitude)&&allowed.contains([latitude,longitude]);
@@ -30,12 +30,12 @@
   const sw=config.bounds[0],ne=config.bounds[1];
   L.polygon([[[-85,-180],[-85,180],[85,180],[85,-180]],[[sw[0],sw[1]],[ne[0],sw[1]],[ne[0],ne[1]],[sw[0],ne[1]]]],{stroke:false,fillColor:'#eaf0e7',fillOpacity:1,interactive:false}).addTo(map);
   if(picker)fixed.hidden=false;
-  else L.marker(initial,{icon:L.icon({iconUrl:'/officer-assets/location-pin.svg',iconSize:[36,48],iconAnchor:[18,47]}),keyboard:true,alt:'Reported plant location'}).addTo(map);
+  else L.marker(initial,{icon:L.icon({iconUrl:'/BioGuard-Demo-App/officer-assets/location-pin.svg',iconSize:[36,48],iconAnchor:[18,47]}),keyboard:true,alt:'Reported plant location'}).addTo(map);
   if(!picker){
    const label=document.getElementById('block-label');
    label.hidden=false;label.textContent='Loading location block...';
    try{
-    const blocksResponse=await fetch('/officer-assets/elmina-inspection-blocks.geojson');
+    const blocksResponse=await fetch('/BioGuard-Demo-App/officer-assets/elmina-inspection-blocks.geojson');
     if(!blocksResponse.ok)throw new Error('blocks');
     const blocks=await blocksResponse.json();
     if(blocks.type!=='FeatureCollection'||!Array.isArray(blocks.features)||!blocks.features.length)throw new Error('blocks');
