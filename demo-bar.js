@@ -46,7 +46,14 @@
   row.append(button('Grounds',()=>demo.login('grounds')),button('Management',()=>demo.login('management')),button('Ecology',()=>demo.login('ecology')),button('Fill example fields',fillFields),button('Use sample photo',sample),button('Advance to inspection date',()=>demo.advance()),button('Reset demo',()=>{if(confirm('Clear this browser’s demo progress and sample photos?'))demo.reset();}));
   const hint=document.createElement('p');hint.id='demo-hint';hint.setAttribute('aria-live','polite');
   const clock=document.createElement('small');clock.id='demo-clock';
-  bar.append(title,notice,row,hint,clock);document.body.append(bar);
+  const header=document.createElement('div');header.className='demo-header';
+  const introduction=document.createElement('div');introduction.append(title,notice);
+  const disclosure=document.createElement('div');disclosure.className='demo-disclosure';
+  const label=document.createElement('strong');label.textContent='DEMO ONLY - NOT THE FULL APPLICATION';
+  const explanation=document.createElement('span');explanation.textContent='This is a frontend walkthrough. The full working app is in the separately submitted repository.';
+  const repository=document.createElement('a');repository.href='https://github.com/Etticx/BioGuard';repository.target='_blank';repository.rel='noopener noreferrer';repository.textContent='View full BioGuard repository';
+  disclosure.append(label,explanation,repository);header.append(introduction,disclosure);
+  bar.append(header,row,hint,clock);document.body.append(bar);
   const resize=()=>{document.documentElement.style.setProperty('--demo-bar-height',bar.offsetHeight+'px');if(!document.getElementById('root'))document.body.classList.add('demo-management');};new ResizeObserver(resize).observe(bar);resize();
   function update(){hint.textContent=guidance();clock.textContent='Demo date: '+demo.day()+' (Malaysia) · Data stays in this browser · Any uploaded image shows the same prewritten Mimosa example.';}
   window.addEventListener('bioguard:demo-state',update);update();
