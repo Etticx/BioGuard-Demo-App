@@ -53,7 +53,8 @@
   const explanation=document.createElement('span');explanation.textContent='This is a frontend walkthrough. The full working app is in the separately submitted repository.';
   const repository=document.createElement('a');repository.href='https://github.com/Etticx/BioGuard';repository.target='_blank';repository.rel='noopener noreferrer';repository.textContent='View full BioGuard repository';
   disclosure.append(label,explanation,repository);header.append(introduction,disclosure);
-  bar.append(header,row,hint,clock);document.body.append(bar);
+  const content=document.createElement('div');content.className='demo-main-controls';content.append(introduction,row,hint,clock);
+  bar.append(content,disclosure);document.body.append(bar);
   const resize=()=>{document.documentElement.style.setProperty('--demo-bar-height',bar.offsetHeight+'px');if(!document.getElementById('root'))document.body.classList.add('demo-management');};new ResizeObserver(resize).observe(bar);resize();
   function update(){hint.textContent=guidance();clock.textContent='Demo date: '+demo.day()+' (Malaysia) · Data stays in this browser · Any uploaded image shows the same prewritten Mimosa example.';}
   window.addEventListener('bioguard:demo-state',update);update();
